@@ -1,5 +1,4 @@
 #include "gesturalReliefApp.h"
-#include "lodepng.h"
 
 
 //--------------------------------------------------------------
@@ -166,7 +165,7 @@ void gesturalReliefApp::setup(){
 	unsigned int width, height;
 	unsigned error = lodepng::decode(image, width, height, "../../../data/mesh-texture.png");
 	
-	printf("%d %d %d\n", width, height,image.size());
+	//printf("%d %d %d\n", width, height,image.size());
 	
 	// If there's an error, display it.
 	if(error != 0)
@@ -209,8 +208,29 @@ void gesturalReliefApp::update(){
 	
 	unsigned char * pixels = kinect.getDepthPixels();
 	calibratedColorImage.setFromPixels(kinect.getCalibratedRGBPixels(), kinect.width, kinect.height, OF_IMAGE_COLOR);
+	int sum = 0;
+	
+	//invert heights
+	for(int y = 0; y < kinect.height; y++) {
+		for (int x = 0; x < kinect.width; x++) {
+			pixels[(y*kinect.width)+x]= 255-pixels[(y*kinect.width)+x];
+		}
+	}
+	
+	//flip horizontally
+	for(int y = 0; y < kinect.height; y++) {
+		for (int x = 0; x < kinect.width/2; x++) {
+			unsigned char temp = pixels[(y*kinect.width)+x];
+			pixels[(y*kinect.width)+x] = pixels[(y*kinect.width)+(kinect.width-1-x)];
+			pixels[(y*kinect.width)+(kinect.width-1-x)] = temp;
+		}
+	}
+	
+	//printf("%d\n",sum/(kinect.height*kinect.width));
+	
 	grayImage.setFromPixels(pixels, kinect.width, kinect.height);
 	
+	//pixels = grayImage.getPixels();
 	// We do two thresholds - one for the far plane and one for the near plane
 	// We then do a cvAnd to get the pixels which are a union of the two thresholds.	
 	if ( bThreshWithOpenCV ){
@@ -219,8 +239,9 @@ void gesturalReliefApp::update(){
 		grayThreshFar.threshold(farThreshold, true);
 		grayThresh.threshold(nearThreshold);
 		cvAnd(grayThresh.getCvImage(), grayThreshFar.getCvImage(), grayImage.getCvImage(), NULL);
-		
+		//grayImage = grayThresh;
 		// These use OpenCV to blur the image
+		grayImage = grayThreshFar;
 		grayImage.erode_3x3();
 		grayImage.dilate_3x3();
 	}
@@ -457,8 +478,8 @@ void gesturalReliefApp::update(){
 
 //--------------------------------------------------------------
 void gesturalReliefApp::draw(){
-#ifdef SPAN_SCREEN
-	// Kinect depth maps and contours
+//#ifdef SPAN_SCREEN
+	/*// Kinect depth maps and contours
 	grayImage.draw(0, 0, kinect.width, kinect.height);
 	calibratedColorImage.draw(kinect.width, 0, kinect.width, kinect.height);
 	
@@ -510,28 +531,7 @@ void gesturalReliefApp::draw(){
 	char reportStr[1024];
 	sprintf(reportStr, "using opencv threshold = %i (press spacebar)\nset near threshold %i (press: l k)\nset far threshold %i (press: < >) num blobs found %i, fps: %f",bThreshWithOpenCV, nearThreshold, farThreshold, myHandDetector.contourFinder.nBlobs, ofGetFrameRate());
 	ofDrawBitmapString(reportStr, 20, kinect.height + 40);
-	
-	if(recording == 1) {
-		sprintf(reportStr,"Recording animation %d...",recording);
-		ofDrawBitmapString(reportStr, 20, kinect.height + 100);
-	} else if (animating != 0) {
-		sprintf(reportStr,"Playing...",recording);
-		ofDrawBitmapString(reportStr, 20, kinect.height + 100);
-	}
-		
-	
-	
-	drawInstances();
-	// Draw on relief
-	visualizeOnRelief();
-	
-	// Draw selection feedback
-	if (selectionOn || manipulationOn)
-		visualizeSelectionFeedback();
-	
-	// Draw Instances
-	
-#else
+	*/
 	char reportStr[1024];
 	int text_position = 0;
 	text_position += 20;
@@ -571,7 +571,7 @@ void gesturalReliefApp::draw(){
 		drawInstances();
 	else if(visualizationMode == 1)
 		drawFrames();
-#endif
+//#endif
 
 	
 }
@@ -836,9 +836,9 @@ void gesturalReliefApp::keyPressed(int key){
 			nearThreshold --;
 			if (nearThreshold < 0) nearThreshold = 0;
 		break;
-	}
+	}*/
 	
-	switch	(key){
+	/*switch	(key){
 	 case 'w':
 	 instanceCamera.y++;
 	 break;
@@ -1388,8 +1388,8 @@ void gesturalReliefApp::drawInstances(){
 		//glScaled(scale, scale, scale);
 		glRotated(-5, 0, 1, 0);
 		//glLineWidth(1);
-		//drawMeshWire(meshes[draw_pos], alpha,inst_pos == current_instance);
-		drawMeshTextured(meshes[draw_pos], alpha,inst_pos == current_instance);
+		drawMeshWire(meshes[draw_pos], alpha,inst_pos == current_instance);
+		//drawMeshTextured(meshes[draw_pos], alpha,inst_pos == current_instance);
 		//drawMeshContour(meshes[inst_pos], alpha,inst_pos == current_instance);
 		
 		//glCallList(meshList[inst_pos]);
@@ -2085,6 +2085,7 @@ void gesturalReliefApp::drawMeshTextured(mesh &relief,float color_scale, bool cu
 		}
 	}
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }
 
