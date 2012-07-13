@@ -137,7 +137,7 @@ void gesturalReliefApp::setup(){
 	recording = 0;
 	current_instance = 0;
 	visualizationOffset = 0;
-	visualizationSpeed = 0;
+	inverted_clip_height = 40;
 	for (int x = 0; x < RELIEF_SIZE_X; x++) {
 		for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 			mPinHeightToRelief[x][y] = 100;
@@ -211,20 +211,20 @@ void gesturalReliefApp::update(){
 	int sum = 0;
 	
 	//invert heights
-	for(int y = 0; y < kinect.height; y++) {
+	/*for(int y = 0; y < kinect.height; y++) {
 		for (int x = 0; x < kinect.width; x++) {
 			pixels[(y*kinect.width)+x]= 255-pixels[(y*kinect.width)+x];
 		}
-	}
+	}*/
 	
 	//flip horizontally
-	for(int y = 0; y < kinect.height; y++) {
+	/*for(int y = 0; y < kinect.height; y++) {
 		for (int x = 0; x < kinect.width/2; x++) {
 			unsigned char temp = pixels[(y*kinect.width)+x];
 			pixels[(y*kinect.width)+x] = pixels[(y*kinect.width)+(kinect.width-1-x)];
 			pixels[(y*kinect.width)+(kinect.width-1-x)] = temp;
 		}
-	}
+	}*/
 	
 	//printf("%d\n",sum/(kinect.height*kinect.width));
 	
@@ -236,12 +236,12 @@ void gesturalReliefApp::update(){
 	if ( bThreshWithOpenCV ){
 		grayThreshFar = grayImage;
 		grayThresh = grayImage;
-		grayThreshFar.threshold(farThreshold, true);
-		grayThresh.threshold(nearThreshold);
+		grayThreshFar.threshold(farThreshold);
+		grayThresh.threshold(nearThreshold,true);
 		cvAnd(grayThresh.getCvImage(), grayThreshFar.getCvImage(), grayImage.getCvImage(), NULL);
 		//grayImage = grayThresh;
 		// These use OpenCV to blur the image
-		grayImage = grayThreshFar;
+		//grayImage = grayThresh;
 		grayImage.erode_3x3();
 		grayImage.dilate_3x3();
 	}
@@ -269,11 +269,13 @@ void gesturalReliefApp::update(){
 		cursorRect.x += (newX - cursorRect.x) / CURSOR_DELAY;
 		cursorRect.y += (newY - cursorRect.y) / CURSOR_DELAY;
 		cursorAngle += (newAngle - cursorAngle) / CURSOR_DELAY;
+		printf("%.2f\n",cursorRect.x);
 		
 		mapToRelief(cursorRect, &reliefCursorRect);
 		mapAngleToRelief(cursorAngle, &reliefCursorAngle);
 	} else {
 		cursorRect.width = 0;
+		cursorRect.height = 0;
 	}
 	
 	/*****************
@@ -444,15 +446,10 @@ void gesturalReliefApp::update(){
 		vector<vector<ofVec3f> > &currentn = current_mesh.normals;
 		vector<vector<float> > &oldv = meshes[current_instance].vertices;
 		vector<vector<ofVec3f> > &oldn = meshes[current_instance].normals;
-		//float progress = ofMap(changingFrame, 1, 10, 0, 1, 1);
-		//progress = pow(progress,2);
 		for(int x = 0; x < currentv.size(); x++) {
 			for(int y = 0; y < currentv.size(); y++) {
 				float diff = currentv[x][y] - oldv[x][y];
 				oldv[x][y] += diff*0.2;
-				//ofVec3f ndiff = currentn[x][y] - oldn[x][y];
-				//oldn[x][y] += diff*0.5;
-				//oldn[x][y].normalize();
 			}
 		}
 		
@@ -531,7 +528,7 @@ void gesturalReliefApp::draw(){
 	char reportStr[1024];
 	sprintf(reportStr, "using opencv threshold = %i (press spacebar)\nset near threshold %i (press: l k)\nset far threshold %i (press: < >) num blobs found %i, fps: %f",bThreshWithOpenCV, nearThreshold, farThreshold, myHandDetector.contourFinder.nBlobs, ofGetFrameRate());
 	ofDrawBitmapString(reportStr, 20, kinect.height + 40);
-	*/
+	//*/
 	char reportStr[1024];
 	int text_position = 0;
 	text_position += 20;
@@ -658,7 +655,7 @@ void gesturalReliefApp::transform() {
 	
 	float translateX = reliefCursorRect.x - lockedSelectionRect.x;
 	float translateY = reliefCursorRect.y - lockedSelectionRect.y;
-	float translateZ = myHandDetector.averageHandHeight - lockedSelectionHeight;
+	float translateZ = -(myHandDetector.averageHandHeight - lockedSelectionHeight); //this is flipped because lower values for the relief correspond to higher pins
 	
 	int newHeight;
 	for (int x = 0; x < RELIEF_SIZE_X; x++) {
@@ -748,30 +745,32 @@ void gesturalReliefApp::resetProjectionPixels() {
 
 //--------------------------------------------------------------
 void gesturalReliefApp::mapToProjection(ofPoint realPt, ofPoint * projectionPt) {
-	(*projectionPt).x = (int)floor(ofMap(realPt.x, ROI_BORDER_W, roiRect.width + ROI_BORDER_W, 0, projectionRect.width));
+	(*projectionPt).x = (int)floor(ofMap(realPt.x, ROI_BORDER_W, roiRect.width + ROI_BORDER_W, projectionRect.width,0));
 	(*projectionPt).y = (int)floor(ofMap(realPt.y, ROI_BORDER_H, roiRect.height + ROI_BORDER_H, 0, projectionRect.height));
 }
 
 //--------------------------------------------------------------
 void gesturalReliefApp::mapToProjection(ofRectangle realRect, ofRectangle * _projectionRect) {	
-	(*_projectionRect).x = (int)floor(ofMap(realRect.x, ROI_BORDER_W, roiRect.width + ROI_BORDER_W, 0, projectionRect.width));
+	(*_projectionRect).x = (int)floor(ofMap(realRect.x, ROI_BORDER_W, roiRect.width + ROI_BORDER_W, projectionRect.width,0));
 	(*_projectionRect).y = (int)floor(ofMap(realRect.y, ROI_BORDER_H, roiRect.height + ROI_BORDER_H, 0, projectionRect.height));
 	(*_projectionRect).width = (int)floor(realRect.width / roiRect.width * projectionRect.width);
 	(*_projectionRect).height = (int)floor(realRect.height / roiRect.height * projectionRect.height);
+	(*_projectionRect).x -= (*_projectionRect).width; //We need to adjust the x because we are mirroring horizontally 
 }
 
 //--------------------------------------------------------------
 void gesturalReliefApp::mapToRelief(ofPoint realPt, ofPoint * reliefPt) {
-	(*reliefPt).x = (int)floor(ofMap(realPt.x, ROI_BORDER_W, ROI_BORDER_W + roiRect.width, 0, RELIEF_SIZE_X));
+	(*reliefPt).x = (int)floor(ofMap(realPt.x, ROI_BORDER_W, ROI_BORDER_W + roiRect.width, RELIEF_SIZE_X,0));
 	(*reliefPt).y = (int)floor(ofMap(realPt.y, ROI_BORDER_H, ROI_BORDER_H + roiRect.height, 0, RELIEF_SIZE_Y));
 }
 	
 //--------------------------------------------------------------
 void gesturalReliefApp::mapToRelief(ofRectangle realRect, ofRectangle * reliefRect) {	
-	(*reliefRect).x = (int)floor(ofMap(realRect.x, ROI_BORDER_W, ROI_BORDER_W + roiRect.width, 0, RELIEF_SIZE_X));
+	(*reliefRect).x = (int)floor(ofMap(realRect.x, ROI_BORDER_W, ROI_BORDER_W + roiRect.width, RELIEF_SIZE_X,0));
 	(*reliefRect).y = (int)floor(ofMap(realRect.y, ROI_BORDER_H, ROI_BORDER_H + roiRect.height, 0, RELIEF_SIZE_Y));
 	(*reliefRect).width = (int)floor(realRect.width / roiRect.width * RELIEF_SIZE_X);
 	(*reliefRect).height = (int)floor(realRect.height / roiRect.height * RELIEF_SIZE_Y);
+	(*reliefRect).x -= (*reliefRect).width; //We need to adjust the x because we are mirroring horizontally 
 }
 
 //--------------------------------------------------------------
@@ -810,8 +809,8 @@ ofVec3f gesturalReliefApp::map3dToRelief(ofVec3f point) {
 //--------------------------------------------------------------
 void gesturalReliefApp::keyPressed(int key){
 	frames_idle = 0;
-	// Settings for kinect
-	/*switch (key)
+	/*// Settings for kinect
+	switch (key)
 	{
 		case ' ':
 			bThreshWithOpenCV = !bThreshWithOpenCV;
@@ -836,8 +835,8 @@ void gesturalReliefApp::keyPressed(int key){
 			nearThreshold --;
 			if (nearThreshold < 0) nearThreshold = 0;
 		break;
-	}*/
-	
+	}
+	//*/
 	/*switch	(key){
 	 case 'w':
 	 instanceCamera.y++;
@@ -1389,6 +1388,7 @@ void gesturalReliefApp::drawInstances(){
 		glRotated(-5, 0, 1, 0);
 		//glLineWidth(1);
 		drawMeshWire(meshes[draw_pos], alpha,inst_pos == current_instance);
+		//drawMeshInverted(meshes[draw_pos], alpha,inst_pos == current_instance);
 		//drawMeshTextured(meshes[draw_pos], alpha,inst_pos == current_instance);
 		//drawMeshContour(meshes[inst_pos], alpha,inst_pos == current_instance);
 		
@@ -2088,6 +2088,140 @@ void gesturalReliefApp::drawMeshTextured(mesh &relief,float color_scale, bool cu
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }
+
+/*void gesturalReliefApp::drawMeshInverted(mesh &relief,float color_scale, bool current) {
+	vector<vector<float> > &heights = relief.vertices;
+	vector<vector<ofVec3f> > &normals = relief.normals;
+    vector<ofVec3f> vertices(heights.size());
+	int vert_mask[heights.size()][heights.size()];
+	bool checked_mask[heights.size()][heights.size()];
+	memset(checked_mask, 0, heights.size()*heights.size());
+	//vector<vector<ofVec3f> > vertices;
+	//vector<vector<ofVec3f> > vert_mask;
+	
+	float width = (float)FRAME_WIDTH/heights.size();
+	float depth = (float)FRAME_WIDTH/(heights.size());
+	
+	
+	for (int x = 0; x < heights.size()-1; x++) {		
+		for(int y = 0;y < heights[x].size()-1; y++) {
+			float xoffset = -(FRAME_WIDTH/2) + x*width;
+			float zoffset = (FRAME_WIDTH/2)-y*depth;
+			float height = heights[x][y];
+			ofVec3f newpoint;
+			int num = 0;
+			ofVec3f point1(xoffset,height,zoffset);
+			ofVec3f point2(xoffset+width,heights[x+1][y],zoffset);
+			if((point1.y >= inverted_clip_height && point2.y <= inverted_clip_height) ||
+			   (point2.y >= inverted_clip_height && point1.y <= inverted_clip_height)) {
+				newpoint = point1+(point2-point1)*ofMap(inverted_clip_height, point1.y, point2.y, 0, 1, 1);
+				num++;
+			}
+			point2.set(xoffset,heights[x][y+1],zoffset-depth);
+			if((point1.y >= inverted_clip_height && point2.y <= inverted_clip_height) ||
+			   (point2.y >= inverted_clip_height && point1.y <= inverted_clip_height)) {
+				newpoint = point1+(point2-point1)*ofMap(inverted_clip_height, point1.y, point2.y, 0, 1, 1);
+				num++;
+			}
+			if(num == 0) {
+				newpoint = point1;
+				if (newpoint.y <= inverted_clip_height) {
+					vert_mask[x][y] = 1;
+				} else {
+					vert_mask[x][y] = 0;
+				}
+			}		
+			vertices[x][y] = newpoint;			
+		}
+	}
+	
+	/*for (int x = 0; x < heights.size()-1; x++) {		
+		for(int y = 0;y < heights[x].size()-1; y++) {
+			float xoffset = -(FRAME_WIDTH/2) + x*width;
+			float zoffset = (FRAME_WIDTH/2)-y*depth;
+			float height = heights[x][y];
+			if(height > inverted_clip_height) {
+				vert_mask[x][y] = 0;
+			} else {
+				vert_mask[x][y] = 1;
+			}
+			ofVec3f newpoint;
+			int num = 0;
+			ofVec3f point1(xoffset,height,zoffset);
+			ofVec3f point2(xoffset+width,heights[x+1][y],zoffset);
+			if((point1.y >= inverted_clip_height && point2.y <= inverted_clip_height) ||
+			   (point2.y >= inverted_clip_height && point1.y <= inverted_clip_height)) {
+				newpoint += point1+(point2-point1)*ofMap(inverted_clip_height, point1.y, point2.y, 0, 1, 1);
+				num++;
+			}
+			point2.set(xoffset,heights[x][y+1],zoffset-depth);
+			if((point1.y >= inverted_clip_height && point2.y <= inverted_clip_height) ||
+			   (point2.y >= inverted_clip_height && point1.y <= inverted_clip_height)) {
+				newpoint += point1+(point2-point1)*ofMap(inverted_clip_height, point1.y, point2.y, 0, 1, 1);
+				num++;
+			}
+			if(num == 0)
+				newpoint = point1;
+				
+			vertices[x][y] = newpoint/num;			
+
+				
+		}
+	}
+	
+	
+	ofVec3f norm, color;
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	//clipped bottom
+	glBegin(GL_QUADS);
+	float minx = -(FRAME_WIDTH/2);
+	float minz = (FRAME_WIDTH/2);
+	float maxx = (FRAME_WIDTH/2);
+	float maxz = -(FRAME_WIDTH/2);
+	ofVec3f white(1,1,1);
+	for (int x = 0; x < heights.size()-1; x++) {
+		for(int y = 0;y < heights[x].size()-1; y++) {
+			if(vert_mask[x][y] == 1 &&vert_mask[x+1][y] == 1 &&vert_mask[x][y+1] == 1 &&vert_mask[x+1][y+1] == 1){
+			float xoffset = -(FRAME_WIDTH/2) + x*width;
+			float zoffset = (FRAME_WIDTH/2)-y*depth;			
+			
+			norm = normals[x][y];
+			glNormal3f(norm.x, norm.y, norm.z);
+			color = white * color_scale * meshMask[x][y]*vert_mask[x][y];
+			glColor3f(color.x, color.y, color.z);
+			glTexCoord2d(ofMap(xoffset,minx,maxx,1,0), ofMap(zoffset,minz,maxz,0,1));
+			glVertex3f(vertices[x][y].x, vertices[x][y].y,vertices[x][y].z);			
+			
+			norm = normals[x+1][y];
+			glNormal3f(norm.x, norm.y, norm.z);
+			color = white * color_scale * meshMask[x+1][y]*vert_mask[x+1][y];
+			glColor3f(color.x, color.y, color.z);
+			glTexCoord2d(ofMap(xoffset+width,minx,maxx,1,0), ofMap(zoffset,minz,maxz,0,1));
+			glVertex3f(vertices[x+1][y].x, vertices[x+1][y].y,vertices[x+1][y].z);
+			
+			norm = normals[x+1][y+1];
+			glNormal3f(norm.x, norm.y, norm.z);
+			color = white * color_scale * meshMask[x+1][y+1]*vert_mask[x+1][y+1];
+			glColor3f(color.x, color.y, color.z);
+			glTexCoord2d(ofMap(xoffset+width,minx,maxx,1,0), ofMap(zoffset-width,minz,maxz,0,1));
+			glVertex3f(vertices[x+1][y+1].x, vertices[x+1][y+1].y,vertices[x+1][y+1].z);				
+			
+			norm = normals[x][y+1];
+			glNormal3f(norm.x, norm.y, norm.z);
+			color = white * color_scale * meshMask[x][y+1]*vert_mask[x][y+1];
+			glColor3f(color.x, color.y, color.z);
+			glTexCoord2d(ofMap(xoffset,minx,maxx,1,0), ofMap(zoffset-width,minz,maxz,0,1));
+			glVertex3f(vertices[x][y+1].x, vertices[x][y+1].y,vertices[x][y+1].z);
+			}
+			
+		}
+	}
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}*/
 
 /*
 void gesturalReliefApp::drawMeshSolid(mesh &relief,float color_scale, bool current) {

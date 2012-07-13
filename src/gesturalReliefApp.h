@@ -147,6 +147,7 @@ class gesturalReliefApp : public ofBaseApp , public ofxManyMouse{
 		void drawMeshTextured(mesh &relief,float color_scale, bool current = 0);
 		void drawMeshWire(mesh &relief, float color_scale, bool current = 0);
 		void drawMeshContour(mesh &relief, float color_scale, bool current = 0);
+		//void drawMeshInverted(mesh &relief, float color_scale, bool current = 0);
 		void updateMeshListSolid(int listInxex,mesh &relief);
 		void updateMeshListWire(int listInxex,mesh &relief, bool current = 0);
 		void updateMesh(int index);
@@ -174,7 +175,6 @@ class gesturalReliefApp : public ofBaseApp , public ofxManyMouse{
 		int wheeldevice;
 	
 		float visualizationOffset;
-		float visualizationSpeed;
 		int frames_idle;
 	
 		camera instanceCamera;
@@ -204,5 +204,7 @@ class gesturalReliefApp : public ofBaseApp , public ofxManyMouse{
 	
 		mesh current_mesh;
 		GLuint texture;
+	
+		float inverted_clip_height;
 };
 

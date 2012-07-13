@@ -194,7 +194,7 @@ void handDetector::findFingers 	(handBlob &blob){
 void handDetector::fitLineThroughBlob (handBlob &aHand, int xSelection, int ySelection, int wSelection, int hSelection) {
 	
 	int numPtsInSelection = 0;
-	ofPoint lineFitPts[aHand.myBlob.nPts];
+	vector<ofPoint> lineFitPts(aHand.myBlob.nPts);
 	
 	for (int j=0; j< aHand.myBlob.nPts; j++){
 		if (aHand.myBlob.pts[j].x > (xSelection) && aHand.myBlob.pts[j].x < (xSelection + wSelection)
@@ -206,7 +206,7 @@ void handDetector::fitLineThroughBlob (handBlob &aHand, int xSelection, int ySel
 	}
 	
 	if (numPtsInSelection > 0)
-		CVLF.fitLine(lineFitPts, numPtsInSelection, aHand.slope, aHand.intercept, aHand.chiSqr);
+		CVLF.fitLine(&(lineFitPts[0]), numPtsInSelection, aHand.slope, aHand.intercept, aHand.chiSqr);
 	else {
 		aHand.slope = 0;
 		aHand.intercept = 0;
