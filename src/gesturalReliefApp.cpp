@@ -135,7 +135,7 @@ void gesturalReliefApp::setup(){
 	for (int x = 0; x < RELIEF_SIZE_X; x++) {
 		for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 			mPinHeightToRelief[x][y] = 100;
-			//mPinHeightToRelief[x][y] = 50; //use this starting value for a safe reset			
+			mPinHeightToRelief[x][y] = 50; //use this starting value for a safe reset			
 		}
 	}
 	pushInstance();
@@ -730,13 +730,13 @@ void gesturalReliefApp::quadraticBezierVertex(float cpx, float cpy, float x, flo
 //--------------------------------------------------------------
 void gesturalReliefApp::updateFromReliefHeight() {
 	//mIOManager->getPinHeightFromRelief(mPinHeightFromRelief);    
-	/*if(!loading || adjust_frame != 0){ //allow manipulation if not loading or in adjust phase
+	if(!loading || adjust_frame != 0){ //allow manipulation if not loading or in adjust phase
 		for (int x = 0; x < RELIEF_SIZE_X; x++) {
 			for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 				mPinHeightToRelief[x][y] += (mPinHeightFromRelief[x][y] - mPinHeightToRelief[x][y]) / DIRECT_MANIPULATION_DELAY;
 			}
 		}
-	}*/
+	}
 }
 
 void gesturalReliefApp::resetProjectionPixels() {
@@ -2287,15 +2287,16 @@ void gesturalReliefApp::processLoading() {
 			for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 				if(mPinMask[x][y]){ //only consider pins that exist							
 					stillLoading[x][y] = 0; //loading flag for individual pins
-					int fdiff = (int)saved[x][y] - (int)mPinHeightFromRelief[x][y];
+					//int fdiff = (int)saved[x][y] - (int)mPinHeightFromRelief[x][y];
 					int tdiff = (int)saved[x][y] - (int)mPinHeightToRelief[x][y];
-					if(abs(fdiff) >= diff_threshold){
-						stillLoading[x][y] = 1;
+					if(abs(tdiff) >= diff_threshold){
+                    //if(abs(fdiff) >= diff_threshold){                            
+                        stillLoading[x][y] = 1;
 						continue_loading_flag = 1;
 					}
-					if (fdiff > 0) {
+					if (tdiff > 0) {
 						mPinHeightToRelief[x][y] += min(max_speed,tdiff);
-					} else if(fdiff < 0){
+					} else if(tdiff < 0){
 						mPinHeightToRelief[x][y] += max(-max_speed,tdiff);
 					}
 					
@@ -2560,7 +2561,9 @@ void gesturalReliefApp::processMessages() {
             unsigned char relief[RELIEF_SIZE_X][RELIEF_SIZE_Y];
             for (int x = 0; x < RELIEF_SIZE_X; x++) { 
                 for (int y = 0; y < RELIEF_SIZE_Y; y++) {
-                    relief[x][y] = (unsigned char)m.getArgAsInt32(y+x*RELIEF_SIZE_Y);
+                    unsigned char val = ofMap(m.getArgAsInt32(y+x*RELIEF_SIZE_Y),0,100,RELIEF_FLOOR,RELIEF_CEIL,1);
+                    mPinHeightFromRelief[x][y] = val;
+                    relief[x][y] = val;
                 }
             }
             //instances[current_instance].frames[current_frame] = reliefatov(relief);
