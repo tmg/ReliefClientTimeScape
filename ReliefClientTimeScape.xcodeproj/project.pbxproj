@@ -127,7 +127,7 @@
 		2250A0C415AE45F600BCC796 /* handDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handDetector.h; sourceTree = "<group>"; };
 		2250A0D815AE486100BCC796 /* linreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linreg.cpp; sourceTree = "<group>"; };
 		2250A0D915AE486100BCC796 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
-		22E7664015AE4D0B00A4D554 /* TimeScapeClientDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeScapeClientDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22E7664015AE4D0B00A4D554 /* ReliefClientTimeScapeDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReliefClientTimeScapeDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E7664E15AE5AC000A4D554 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		22E7664F15AE5AC000A4D554 /* linux_evdev.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linux_evdev.c; sourceTree = "<group>"; };
 		22E7665015AE5AC000A4D554 /* macosx_hidmanager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macosx_hidmanager.c; sourceTree = "<group>"; };
@@ -981,7 +981,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				22E7664015AE4D0B00A4D554 /* TimeScapeClientDebug.app */,
+				22E7664015AE4D0B00A4D554 /* ReliefClientTimeScapeDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -997,9 +997,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* TimeScapeClient */ = {
+		E4B69B5A0A3A1756003C02F2 /* ReliefClientTimeScape */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "TimeScapeClient" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "ReliefClientTimeScape" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -1011,9 +1011,9 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = TimeScapeClient;
+			name = ReliefClientTimeScape;
 			productName = myOFApp;
-			productReference = 22E7664015AE4D0B00A4D554 /* TimeScapeClientDebug.app */;
+			productReference = 22E7664015AE4D0B00A4D554 /* ReliefClientTimeScapeDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1024,7 +1024,7 @@
 			attributes = {
 				LastUpgradeCheck = 0410;
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "TimeScapeClient" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "ReliefClientTimeScape" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1045,7 +1045,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* TimeScapeClient */,
+				E4B69B5A0A3A1756003C02F2 /* ReliefClientTimeScape */,
 			);
 		};
 /* End PBXProject section */
@@ -1314,7 +1314,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/linux64\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/vs2010\"";
-				PRODUCT_NAME = TimeScapeClientDebug;
+				PRODUCT_NAME = ReliefClientTimeScapeDebug;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxOsc/libs/oscpack/src/**";
 				WRAPPER_EXTENSION = app;
@@ -1424,7 +1424,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/linux64\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/vs2010\"";
-				PRODUCT_NAME = TimeScapeClient;
+				PRODUCT_NAME = ReliefClientTimeScape;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxOsc/libs/oscpack/src/**";
 				WRAPPER_EXTENSION = app;
@@ -1434,7 +1434,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "TimeScapeClient" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "ReliefClientTimeScape" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -1443,7 +1443,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "TimeScapeClient" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "ReliefClientTimeScape" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,
