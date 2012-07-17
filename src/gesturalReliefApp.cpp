@@ -268,7 +268,6 @@ void gesturalReliefApp::update(){
 		cursorRect.x += (newX - cursorRect.x) / CURSOR_DELAY;
 		cursorRect.y += (newY - cursorRect.y) / CURSOR_DELAY;
 		cursorAngle += (newAngle - cursorAngle) / CURSOR_DELAY;
-		printf("%.2f\n",cursorRect.x);
 		
 		mapToRelief(cursorRect, &reliefCursorRect);
 		mapAngleToRelief(cursorAngle, &reliefCursorAngle);
@@ -2528,23 +2527,23 @@ void gesturalReliefApp::processMessages() {
         m.setAddress("/relief/connect");
         m.addIntArg(LISTEN_PORT);
 		sender.sendMessage(m);
-        lastPing = ofGetElapsedTimef();        
+        lastPing = ofGetElapsedTimef();
     } else {
-        if (connected && ofGetElapsedTimef() > lastPing + 2.f) {
+        //if (connected && ofGetElapsedTimef() > lastPing + 2.f) {
             ofxOscMessage m;
             m.setAddress("/relief/ping");
             sender.sendMessage(m);
-        }
+        //}
         
-        ofxOscMessage m;
-        m.setAddress("/relief/set");
+        ofxOscMessage m1;
+        m1.setAddress("/relief/set");
         //send the square
         for (int x = 0; x < RELIEF_SIZE_X; x++) { 
             for (int y = 0; y < RELIEF_SIZE_Y; y++) {
-               m.addIntArg(ofMap(mPinHeightToRelief[x][y],RELIEF_FLOOR,RELIEF_CEIL,0,100,1));
+               m1.addIntArg(ofMap(mPinHeightToRelief[x][y],RELIEF_FLOOR,RELIEF_CEIL,0,100,1));
             }
         }
-        sender.sendMessage(m);
+        sender.sendMessage(m1);
     }
     
     while (receiver.hasWaitingMessages()) {
@@ -2552,18 +2551,16 @@ void gesturalReliefApp::processMessages() {
         receiver.getNextMessage(&m);        
         // check for mouse moved message
         if(m.getAddress() == "/relief/connect/reply"){           
-            int port = m.getArgAsInt32(0);
-            sender.setup(HOST,port);
             connected = true;
             printf("CONNECTED\n");
         }
         if(m.getAddress() == "/relief/update") {
-            unsigned char relief[RELIEF_SIZE_X][RELIEF_SIZE_Y];
+            //unsigned char relief[RELIEF_SIZE_X][RELIEF_SIZE_Y];
             for (int x = 0; x < RELIEF_SIZE_X; x++) { 
                 for (int y = 0; y < RELIEF_SIZE_Y; y++) {
                     unsigned char val = ofMap(m.getArgAsInt32(y+x*RELIEF_SIZE_Y),0,100,RELIEF_FLOOR,RELIEF_CEIL,1);
                     mPinHeightFromRelief[x][y] = val;
-                    relief[x][y] = val;
+                    //relief[x][y] = val;
                 }
             }
             //instances[current_instance].frames[current_frame] = reliefatov(relief);

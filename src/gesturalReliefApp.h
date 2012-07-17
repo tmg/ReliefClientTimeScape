@@ -3,7 +3,7 @@
 #include "ofxKinect.h"
 #include "ofxManyMouse.h"
 #include "ofxOsc.h"
-#include "ReliefIOManager.h"
+//#include "ReliefIOManager.h"
 #include "handDetector.h"
 #include "constants.h"
 #include "lodepng.h"
@@ -109,7 +109,7 @@ class gesturalReliefApp : public ofBaseApp , public ofxManyMouse{
 		ofRectangle parallaxRect;
 		
 		// Relief
-		ReliefIOManager * mIOManager;
+		//ReliefIOManager * mIOManager;
 		unsigned char mPinHeightFromRelief [RELIEF_SIZE_X][RELIEF_SIZE_Y];
 		unsigned char mPinHeightToRelief [RELIEF_SIZE_X][RELIEF_SIZE_Y];
 		unsigned char mPinMask[RELIEF_SIZE_X][RELIEF_SIZE_Y];
