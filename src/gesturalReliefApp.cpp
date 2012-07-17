@@ -12,13 +12,7 @@ void gesturalReliefApp::setup(){
 	glLineWidth(2);
 	glPointSize(1);
 	
-	//OpenGL Setup
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity(); 
-	//glOrtho(0, ofGetWidth(), ofGetHeight(), 0, -ofGetHeight(), ofGetHeight());
-	glMatrixMode(GL_MODELVIEW); 
-	glLoadIdentity();
-	
+	//OpenGL Setup	
 	GLfloat red[] = {1.0, 0.0, 0.0}; //set the material to red
 	GLfloat white[] = {1.0, 1.0, 1.0}; //set the material to white
 	GLfloat green[] = {0.0, 1.0, 0.0}; //set the material to green
@@ -123,8 +117,8 @@ void gesturalReliefApp::setup(){
 	memcpy(mPinMask, mPinMaskDummy, RELIEF_SIZE_X * RELIEF_SIZE_Y);
 	generateMeshMask();
 	// Initialize communication with Relief table
-	if(RELIEF_CONNECTED)
-		mIOManager = new ReliefIOManager();
+	//if(RELIEF_CONNECTED)
+		//mIOManager = new ReliefIOManager();
 	
 	// Reset height pin arrays
 	updateFromReliefHeight();
@@ -159,7 +153,7 @@ void gesturalReliefApp::setup(){
 	frameCamera.z = -148;
 	frameCamera.angle = -11;
 	
-	font.loadFont("HelveticaLight.ttf", 13);
+	font.loadFont("HelveticaLight.ttf", 14);
 
 	std::vector<GLubyte> image;
 	unsigned int width, height;
@@ -168,8 +162,7 @@ void gesturalReliefApp::setup(){
 	//printf("%d %d %d\n", width, height,image.size());
 	
 	// If there's an error, display it.
-	if(error != 0)
-	{
+	if(error != 0) {
 		std::cout << "error " << error << ": " << lodepng_error_text(error) << std::endl;
 	}	
 	
@@ -194,12 +187,18 @@ void gesturalReliefApp::setup(){
 	
     // build our texture mipmaps
     gluBuild2DMipmaps( GL_TEXTURE_2D, 4, width, height, GL_RGBA, GL_UNSIGNED_BYTE, &image[0] );
+    
+    //Network
+    connected = false;
+    sender.setup(HOST, CONNECTION_PORT);
+    receiver.setup(LISTEN_PORT);
+    lastPing = ofGetElapsedTimef();
 	
 }
 
 //--------------------------------------------------------------
 void gesturalReliefApp::update(){
-	
+
 	/*****************
 	 * Kinect update *
 	 *****************/
@@ -467,9 +466,9 @@ void gesturalReliefApp::update(){
 		updateAnnotations();
 	}
 
-	
+	processMessages();
 	if(RELIEF_CONNECTED){
-		mIOManager->sendPinHeightToRelief(mPinHeightToRelief);
+		//mIOManager->sendPinHeightToRelief(mPinHeightToRelief);
 	}
 }
 
@@ -529,6 +528,11 @@ void gesturalReliefApp::draw(){
 	sprintf(reportStr, "using opencv threshold = %i (press spacebar)\nset near threshold %i (press: l k)\nset far threshold %i (press: < >) num blobs found %i, fps: %f",bThreshWithOpenCV, nearThreshold, farThreshold, myHandDetector.contourFinder.nBlobs, ofGetFrameRate());
 	ofDrawBitmapString(reportStr, 20, kinect.height + 40);
 	//*/
+    visualizeOnRelief();
+    if (selectionOn || manipulationOn || (animating != 0))// && instances[current_instance].cursorRect[current_frame].width != -1))
+		visualizeSelectionFeedback();
+	
+
 	char reportStr[1024];
 	int text_position = 0;
 	text_position += 20;
@@ -559,16 +563,16 @@ void gesturalReliefApp::draw(){
 		sprintf(reportStr,"Recording Ready...");
 		ofDrawBitmapString(reportStr, 20, text_position);
 	}
-	visualizeOnRelief();
+    
+	if(visualizationMode == 0) {
+		
+        drawInstances();
+	} else if(visualizationMode == 1) {
+		drawFrames();
+    }
 	
 	// Draw selection feedback
-	if (selectionOn || manipulationOn || (animating != 0))// && instances[current_instance].cursorRect[current_frame].width != -1))
-		visualizeSelectionFeedback();
-	if(visualizationMode == 0)
-		drawInstances();
-	else if(visualizationMode == 1)
-		drawFrames();
-//#endif
+	//#endif
 
 	
 }
@@ -725,14 +729,14 @@ void gesturalReliefApp::quadraticBezierVertex(float cpx, float cpy, float x, flo
 
 //--------------------------------------------------------------
 void gesturalReliefApp::updateFromReliefHeight() {
-	mIOManager->getPinHeightFromRelief(mPinHeightFromRelief);
-	if(!loading || adjust_frame != 0){ //allow manipulation if not loading or in adjust phase
+	//mIOManager->getPinHeightFromRelief(mPinHeightFromRelief);    
+	/*if(!loading || adjust_frame != 0){ //allow manipulation if not loading or in adjust phase
 		for (int x = 0; x < RELIEF_SIZE_X; x++) {
 			for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 				mPinHeightToRelief[x][y] += (mPinHeightFromRelief[x][y] - mPinHeightToRelief[x][y]) / DIRECT_MANIPULATION_DELAY;
 			}
 		}
-	}
+	}*/
 }
 
 void gesturalReliefApp::resetProjectionPixels() {
@@ -1050,7 +1054,7 @@ void gesturalReliefApp::buildshape() {
 				float ypos = ofMap(y,0,RELIEF_SIZE_X-1,-radius,radius);
 				double zpos = sqrt(pow(radius,2) - pow(ypos,2) - pow(xpos, 2));
 				if(zpos > 0) {
-					relief[x][y] = (unsigned char)(100-zpos);
+					relief[x][y] = (unsigned char)(103-zpos);
 				} else {
 					relief[x][y] = 100;
 				}
@@ -1068,7 +1072,7 @@ void gesturalReliefApp::buildshape() {
 		for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 			if(mPinMask[x][y] == 1) {
 				if (x>2 && x < 9 && y >2 && y < 9) {
-					relief[x][y] = 0;
+					relief[x][y] = 3;
 				} else {
 					relief[x][y] = 100;
 				}
@@ -1104,7 +1108,7 @@ void gesturalReliefApp::buildshape() {
 		for (int y = 0; y < RELIEF_SIZE_Y; y++) {
 			if(mPinMask[x][y] == 1) {
 				if (x == 6) {
-					relief[x][y] = 10*(abs(y-7));
+					relief[x][y] = 10*(abs(y-7))+3;
 				} else {
 					relief[x][y] = 100;
 				}
@@ -1403,9 +1407,14 @@ void gesturalReliefApp::drawInstances(){
 	glDisable(GL_LIGHT0);
 	glDisable(GL_COLOR_MATERIAL);
 	
+	drawAnnotations();
 	
 	
-	ofVec3f diff = highestPoint - annotationPointH;
+	glPopMatrix();
+}
+
+void gesturalReliefApp::drawAnnotations() {
+    ofVec3f diff = highestPoint - annotationPointH;
 	diff *= 0.3;
 	annotationPointH += diff;
 	ofVec3f drawPointH = annotationPointH;
@@ -1443,9 +1452,7 @@ void gesturalReliefApp::drawInstances(){
 		
 		if(annotationFrame < frame_duration)
 			annotationFrame++;
-		//glPopMatrix();
 	}
-	glPopMatrix();
 }
 
 void gesturalReliefApp::drawRelief(frame relief, int width, int spacing, bool highlight) {
@@ -2353,7 +2360,8 @@ void gesturalReliefApp::drawAnnotation(float value,ofVec3f point,ofVec3f point2,
 		glColor4f(1, 1, 1,alpha);
 		ofTranslate(point3.x+width,point3.y+10,point3.z);
 		ofRotate(180, 0, 0, 1);
-		font.drawString(buffer,0,0);
+		//ofDrawBitmapString(buffer, -200,-700);
+        font.drawString(buffer,0,0);
 		glColor3f(1, 1, 1);
 		ofPopMatrix();
 	}
@@ -2513,6 +2521,52 @@ void gesturalReliefApp::generateLineHeights() {
 	cout << lineHeights.size() << endl;;
 }
 
+void gesturalReliefApp::processMessages() {
+    if(!connected) {
+        ofxOscMessage m;
+        m.setAddress("/relief/connect");
+        m.addIntArg(LISTEN_PORT);
+		sender.sendMessage(m);
+        lastPing = ofGetElapsedTimef();        
+    } else {
+        if (connected && ofGetElapsedTimef() > lastPing + 2.f) {
+            ofxOscMessage m;
+            m.setAddress("/relief/ping");
+            sender.sendMessage(m);
+        }
+        
+        ofxOscMessage m;
+        m.setAddress("/relief/set");
+        //send the square
+        for (int x = 0; x < RELIEF_SIZE_X; x++) { 
+            for (int y = 0; y < RELIEF_SIZE_Y; y++) {
+               m.addIntArg(ofMap(mPinHeightToRelief[x][y],RELIEF_FLOOR,RELIEF_CEIL,0,100,1));
+            }
+        }
+        sender.sendMessage(m);
+    }
+    
+    while (receiver.hasWaitingMessages()) {
+        ofxOscMessage m;
+        receiver.getNextMessage(&m);        
+        // check for mouse moved message
+        if(m.getAddress() == "/relief/connect/reply"){           
+            int port = m.getArgAsInt32(0);
+            sender.setup(HOST,port);
+            connected = true;
+            printf("CONNECTED\n");
+        }
+        if(m.getAddress() == "/relief/update") {
+            unsigned char relief[RELIEF_SIZE_X][RELIEF_SIZE_Y];
+            for (int x = 0; x < RELIEF_SIZE_X; x++) { 
+                for (int y = 0; y < RELIEF_SIZE_Y; y++) {
+                    relief[x][y] = (unsigned char)m.getArgAsInt32(y+x*RELIEF_SIZE_Y);
+                }
+            }
+            //instances[current_instance].frames[current_frame] = reliefatov(relief);
+        }
+    }
+}
 
 void gesturalReliefApp::mousePressed(int device, int button) { //set the wheel mouse to be the one that was not clicked
 	wheeldevice = 1-device;

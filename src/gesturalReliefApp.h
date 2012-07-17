@@ -2,6 +2,7 @@
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "ofxManyMouse.h"
+#include "ofxOsc.h"
 #include "ReliefIOManager.h"
 #include "handDetector.h"
 #include "constants.h"
@@ -142,6 +143,7 @@ class gesturalReliefApp : public ofBaseApp , public ofxManyMouse{
 		
 		void drawInstances();
 		void drawFrames();
+        void drawAnnotations();
 		void drawRelief(frame relief,int width, int spacing, bool highlight = 0);
 		void drawMeshSolid(mesh &relief,float color_scale, bool current = 0);
 		void drawMeshTextured(mesh &relief,float color_scale, bool current = 0);
@@ -206,5 +208,12 @@ class gesturalReliefApp : public ofBaseApp , public ofxManyMouse{
 		GLuint texture;
 	
 		float inverted_clip_height;
+    
+        //Network
+        ofxOscSender sender;
+        ofxOscReceiver receiver;
+        bool connected;
+        void processMessages();
+        float lastPing;
 };
 

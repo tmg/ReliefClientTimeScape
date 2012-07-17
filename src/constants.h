@@ -150,4 +150,11 @@
 
 #define RELIEFSETTINGS "reliefSettings.xml"
 
+#define HOST "localhost"
+#define CONNECTION_PORT 78746
+#define LISTEN_PORT 89001
+
+#define RELIEF_FLOOR 100
+#define RELIEF_CEIL 0
+
 #endif
