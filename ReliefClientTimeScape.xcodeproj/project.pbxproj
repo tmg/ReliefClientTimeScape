@@ -16,16 +16,16 @@
 		2250A08515AE416800BCC796 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2250A07F15AE416800BCC796 /* tinyxmlerror.cpp */; };
 		2250A08615AE416800BCC796 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2250A08015AE416800BCC796 /* tinyxmlparser.cpp */; };
 		2250A08715AE416800BCC796 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2250A08215AE416800BCC796 /* ofxXmlSettings.cpp */; };
-		2250A0C215AE45E900BCC796 /* cvLineFitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2250A0C015AE45E900BCC796 /* cvLineFitter.cpp */; };
-		2250A0C515AE45F600BCC796 /* handDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2250A0C315AE45F600BCC796 /* handDetector.cpp */; };
-		2250A0DA15AE486100BCC796 /* linreg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2250A0D815AE486100BCC796 /* linreg.cpp */; };
-		22E7665C15AE5AC000A4D554 /* linux_evdev.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E7664F15AE5AC000A4D554 /* linux_evdev.c */; };
-		22E7665D15AE5AC000A4D554 /* macosx_hidmanager.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E7665015AE5AC000A4D554 /* macosx_hidmanager.c */; };
-		22E7665E15AE5AC000A4D554 /* macosx_hidutilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E7665115AE5AC000A4D554 /* macosx_hidutilities.c */; };
-		22E7665F15AE5AC000A4D554 /* manymouse.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E7665215AE5AC000A4D554 /* manymouse.c */; };
-		22E7666015AE5AC000A4D554 /* windows_wminput.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E7665615AE5AC000A4D554 /* windows_wminput.c */; };
-		22E7666115AE5AC000A4D554 /* x11_xinput2.c in Sources */ = {isa = PBXBuildFile; fileRef = 22E7665715AE5AC000A4D554 /* x11_xinput2.c */; };
-		22E7666215AE5AC000A4D554 /* ofxManyMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E7665A15AE5AC000A4D554 /* ofxManyMouse.cpp */; };
+		22D2A1F415B5BFEE00431F3B /* linux_evdev.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1E815B5BFEE00431F3B /* linux_evdev.c */; };
+		22D2A1F515B5BFEE00431F3B /* macosx_hidmanager.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1E915B5BFEE00431F3B /* macosx_hidmanager.c */; };
+		22D2A1F615B5BFEE00431F3B /* macosx_hidutilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1EA15B5BFEE00431F3B /* macosx_hidutilities.c */; };
+		22D2A1F715B5BFEE00431F3B /* manymouse.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1EB15B5BFEE00431F3B /* manymouse.c */; };
+		22D2A1F815B5BFEE00431F3B /* windows_wminput.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1EF15B5BFEE00431F3B /* windows_wminput.c */; };
+		22D2A1F915B5BFEE00431F3B /* x11_xinput2.c in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1F015B5BFEE00431F3B /* x11_xinput2.c */; };
+		22D2A1FA15B5BFEE00431F3B /* ofxManyMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1F215B5BFEE00431F3B /* ofxManyMouse.cpp */; };
+		22D2A20315B5C03F00431F3B /* handDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1FC15B5C03F00431F3B /* handDetector.cpp */; };
+		22D2A20415B5C03F00431F3B /* cvLineFitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A1FF15B5C03F00431F3B /* cvLineFitter.cpp */; };
+		22D2A20515B5C03F00431F3B /* linreg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22D2A20115B5C03F00431F3B /* linreg.cpp */; };
 		30F2B6971415565E00597A7B /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = 30F2B5451415565D00597A7B /* cameras.c */; };
 		30F2B6981415565E00597A7B /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = 30F2B5461415565D00597A7B /* core.c */; };
 		30F2B69A1415565E00597A7B /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = 30F2B54F1415565D00597A7B /* tilt.c */; };
@@ -121,26 +121,25 @@
 		2250A08015AE416800BCC796 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		2250A08215AE416800BCC796 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		2250A08315AE416800BCC796 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
-		2250A0C015AE45E900BCC796 /* cvLineFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cvLineFitter.cpp; sourceTree = "<group>"; };
-		2250A0C115AE45E900BCC796 /* cvLineFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvLineFitter.h; sourceTree = "<group>"; };
-		2250A0C315AE45F600BCC796 /* handDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = handDetector.cpp; sourceTree = "<group>"; };
-		2250A0C415AE45F600BCC796 /* handDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handDetector.h; sourceTree = "<group>"; };
-		2250A0D815AE486100BCC796 /* linreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linreg.cpp; sourceTree = "<group>"; };
-		2250A0D915AE486100BCC796 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		22D2A1E715B5BFEE00431F3B /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		22D2A1E815B5BFEE00431F3B /* linux_evdev.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linux_evdev.c; sourceTree = "<group>"; };
+		22D2A1E915B5BFEE00431F3B /* macosx_hidmanager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macosx_hidmanager.c; sourceTree = "<group>"; };
+		22D2A1EA15B5BFEE00431F3B /* macosx_hidutilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macosx_hidutilities.c; sourceTree = "<group>"; };
+		22D2A1EB15B5BFEE00431F3B /* manymouse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = manymouse.c; sourceTree = "<group>"; };
+		22D2A1EC15B5BFEE00431F3B /* manymouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = manymouse.h; sourceTree = "<group>"; };
+		22D2A1ED15B5BFEE00431F3B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		22D2A1EE15B5BFEE00431F3B /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
+		22D2A1EF15B5BFEE00431F3B /* windows_wminput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = windows_wminput.c; sourceTree = "<group>"; };
+		22D2A1F015B5BFEE00431F3B /* x11_xinput2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = x11_xinput2.c; sourceTree = "<group>"; };
+		22D2A1F215B5BFEE00431F3B /* ofxManyMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxManyMouse.cpp; sourceTree = "<group>"; };
+		22D2A1F315B5BFEE00431F3B /* ofxManyMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxManyMouse.h; sourceTree = "<group>"; };
+		22D2A1FC15B5C03F00431F3B /* handDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = handDetector.cpp; sourceTree = "<group>"; };
+		22D2A1FD15B5C03F00431F3B /* handDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handDetector.h; sourceTree = "<group>"; };
+		22D2A1FF15B5C03F00431F3B /* cvLineFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cvLineFitter.cpp; sourceTree = "<group>"; };
+		22D2A20015B5C03F00431F3B /* cvLineFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvLineFitter.h; sourceTree = "<group>"; };
+		22D2A20115B5C03F00431F3B /* linreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linreg.cpp; sourceTree = "<group>"; };
+		22D2A20215B5C03F00431F3B /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		22E7664015AE4D0B00A4D554 /* ReliefClientTimeScapeDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReliefClientTimeScapeDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		22E7664E15AE5AC000A4D554 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		22E7664F15AE5AC000A4D554 /* linux_evdev.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linux_evdev.c; sourceTree = "<group>"; };
-		22E7665015AE5AC000A4D554 /* macosx_hidmanager.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macosx_hidmanager.c; sourceTree = "<group>"; };
-		22E7665115AE5AC000A4D554 /* macosx_hidutilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macosx_hidutilities.c; sourceTree = "<group>"; };
-		22E7665215AE5AC000A4D554 /* manymouse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = manymouse.c; sourceTree = "<group>"; };
-		22E7665315AE5AC000A4D554 /* manymouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = manymouse.h; sourceTree = "<group>"; };
-		22E7665415AE5AC000A4D554 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		22E7665515AE5AC000A4D554 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
-		22E7665615AE5AC000A4D554 /* windows_wminput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = windows_wminput.c; sourceTree = "<group>"; };
-		22E7665715AE5AC000A4D554 /* x11_xinput2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = x11_xinput2.c; sourceTree = "<group>"; };
-		22E7665815AE5AC000A4D554 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		22E7665A15AE5AC000A4D554 /* ofxManyMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxManyMouse.cpp; sourceTree = "<group>"; };
-		22E7665B15AE5AC000A4D554 /* ofxManyMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxManyMouse.h; sourceTree = "<group>"; };
 		22E7666315AE5AED00A4D554 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		30F2B5451415565D00597A7B /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cameras.c; sourceTree = "<group>"; };
 		30F2B5461415565D00597A7B /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core.c; sourceTree = "<group>"; };
@@ -329,8 +328,8 @@
 		2250A03B15AE40EF00BCC796 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				22E7664C15AE5AC000A4D554 /* ofxManyMouse */,
-				2250A0BB15AE45AF00BCC796 /* hands */,
+				22D2A1FB15B5C03F00431F3B /* hands */,
+				22D2A1D015B5BF8F00431F3B /* ofxManyMouse */,
 				2250A05015AE40EF00BCC796 /* relief */,
 				2250A04C15AE40EF00BCC796 /* loadpng */,
 				2250A03C15AE40EF00BCC796 /* constants.h */,
@@ -408,61 +407,60 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		2250A0BB15AE45AF00BCC796 /* hands */ = {
+		22D2A1D015B5BF8F00431F3B /* ofxManyMouse */ = {
 			isa = PBXGroup;
 			children = (
-				2250A0C315AE45F600BCC796 /* handDetector.cpp */,
-				2250A0C415AE45F600BCC796 /* handDetector.h */,
-				2250A0BC15AE45C200BCC796 /* lineFitter */,
-			);
-			name = hands;
-			sourceTree = "<group>";
-		};
-		2250A0BC15AE45C200BCC796 /* lineFitter */ = {
-			isa = PBXGroup;
-			children = (
-				2250A0D815AE486100BCC796 /* linreg.cpp */,
-				2250A0D915AE486100BCC796 /* Matrix.h */,
-				2250A0C015AE45E900BCC796 /* cvLineFitter.cpp */,
-				2250A0C115AE45E900BCC796 /* cvLineFitter.h */,
-			);
-			name = lineFitter;
-			sourceTree = "<group>";
-		};
-		22E7664C15AE5AC000A4D554 /* ofxManyMouse */ = {
-			isa = PBXGroup;
-			children = (
-				22E7664D15AE5AC000A4D554 /* lib */,
-				22E7665815AE5AC000A4D554 /* README */,
-				22E7665915AE5AC000A4D554 /* src */,
+				22D2A1E615B5BFEE00431F3B /* lib */,
+				22D2A1F115B5BFEE00431F3B /* src */,
 			);
 			path = ofxManyMouse;
 			sourceTree = "<group>";
 		};
-		22E7664D15AE5AC000A4D554 /* lib */ = {
+		22D2A1E615B5BFEE00431F3B /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				22E7664E15AE5AC000A4D554 /* LICENSE.txt */,
-				22E7664F15AE5AC000A4D554 /* linux_evdev.c */,
-				22E7665015AE5AC000A4D554 /* macosx_hidmanager.c */,
-				22E7665115AE5AC000A4D554 /* macosx_hidutilities.c */,
-				22E7665215AE5AC000A4D554 /* manymouse.c */,
-				22E7665315AE5AC000A4D554 /* manymouse.h */,
-				22E7665415AE5AC000A4D554 /* README.txt */,
-				22E7665515AE5AC000A4D554 /* TODO.txt */,
-				22E7665615AE5AC000A4D554 /* windows_wminput.c */,
-				22E7665715AE5AC000A4D554 /* x11_xinput2.c */,
+				22D2A1E715B5BFEE00431F3B /* LICENSE.txt */,
+				22D2A1E815B5BFEE00431F3B /* linux_evdev.c */,
+				22D2A1E915B5BFEE00431F3B /* macosx_hidmanager.c */,
+				22D2A1EA15B5BFEE00431F3B /* macosx_hidutilities.c */,
+				22D2A1EB15B5BFEE00431F3B /* manymouse.c */,
+				22D2A1EC15B5BFEE00431F3B /* manymouse.h */,
+				22D2A1ED15B5BFEE00431F3B /* README.txt */,
+				22D2A1EE15B5BFEE00431F3B /* TODO.txt */,
+				22D2A1EF15B5BFEE00431F3B /* windows_wminput.c */,
+				22D2A1F015B5BFEE00431F3B /* x11_xinput2.c */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		22E7665915AE5AC000A4D554 /* src */ = {
+		22D2A1F115B5BFEE00431F3B /* src */ = {
 			isa = PBXGroup;
 			children = (
-				22E7665A15AE5AC000A4D554 /* ofxManyMouse.cpp */,
-				22E7665B15AE5AC000A4D554 /* ofxManyMouse.h */,
+				22D2A1F215B5BFEE00431F3B /* ofxManyMouse.cpp */,
+				22D2A1F315B5BFEE00431F3B /* ofxManyMouse.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		22D2A1FB15B5C03F00431F3B /* hands */ = {
+			isa = PBXGroup;
+			children = (
+				22D2A1FC15B5C03F00431F3B /* handDetector.cpp */,
+				22D2A1FD15B5C03F00431F3B /* handDetector.h */,
+				22D2A1FE15B5C03F00431F3B /* lineFitter */,
+			);
+			path = hands;
+			sourceTree = "<group>";
+		};
+		22D2A1FE15B5C03F00431F3B /* lineFitter */ = {
+			isa = PBXGroup;
+			children = (
+				22D2A1FF15B5C03F00431F3B /* cvLineFitter.cpp */,
+				22D2A20015B5C03F00431F3B /* cvLineFitter.h */,
+				22D2A20115B5C03F00431F3B /* linreg.cpp */,
+				22D2A20215B5C03F00431F3B /* Matrix.h */,
+			);
+			path = lineFitter;
 			sourceTree = "<group>";
 		};
 		30F2B5011415565D00597A7B /* ofxKinect */ = {
@@ -1105,16 +1103,6 @@
 				2250A08515AE416800BCC796 /* tinyxmlerror.cpp in Sources */,
 				2250A08615AE416800BCC796 /* tinyxmlparser.cpp in Sources */,
 				2250A08715AE416800BCC796 /* ofxXmlSettings.cpp in Sources */,
-				2250A0C215AE45E900BCC796 /* cvLineFitter.cpp in Sources */,
-				2250A0C515AE45F600BCC796 /* handDetector.cpp in Sources */,
-				2250A0DA15AE486100BCC796 /* linreg.cpp in Sources */,
-				22E7665C15AE5AC000A4D554 /* linux_evdev.c in Sources */,
-				22E7665D15AE5AC000A4D554 /* macosx_hidmanager.c in Sources */,
-				22E7665E15AE5AC000A4D554 /* macosx_hidutilities.c in Sources */,
-				22E7665F15AE5AC000A4D554 /* manymouse.c in Sources */,
-				22E7666015AE5AC000A4D554 /* windows_wminput.c in Sources */,
-				22E7666115AE5AC000A4D554 /* x11_xinput2.c in Sources */,
-				22E7666215AE5AC000A4D554 /* ofxManyMouse.cpp in Sources */,
 				8A9F18AA15B4AEB4007FC1EE /* IpEndpointName.cpp in Sources */,
 				8A9F18AB15B4AEB4007FC1EE /* NetworkingUtils.cpp in Sources */,
 				8A9F18AC15B4AEB4007FC1EE /* UdpSocket.cpp in Sources */,
@@ -1128,6 +1116,16 @@
 				8A9F18B415B4AEB4007FC1EE /* ofxOscMessage.cpp in Sources */,
 				8A9F18B515B4AEB4007FC1EE /* ofxOscReceiver.cpp in Sources */,
 				8A9F18B615B4AEB4007FC1EE /* ofxOscSender.cpp in Sources */,
+				22D2A1F415B5BFEE00431F3B /* linux_evdev.c in Sources */,
+				22D2A1F515B5BFEE00431F3B /* macosx_hidmanager.c in Sources */,
+				22D2A1F615B5BFEE00431F3B /* macosx_hidutilities.c in Sources */,
+				22D2A1F715B5BFEE00431F3B /* manymouse.c in Sources */,
+				22D2A1F815B5BFEE00431F3B /* windows_wminput.c in Sources */,
+				22D2A1F915B5BFEE00431F3B /* x11_xinput2.c in Sources */,
+				22D2A1FA15B5BFEE00431F3B /* ofxManyMouse.cpp in Sources */,
+				22D2A20315B5C03F00431F3B /* handDetector.cpp in Sources */,
+				22D2A20415B5C03F00431F3B /* cvLineFitter.cpp in Sources */,
+				22D2A20515B5C03F00431F3B /* linreg.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
