@@ -140,7 +140,6 @@
 		22D2A20115B5C03F00431F3B /* linreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linreg.cpp; sourceTree = "<group>"; };
 		22D2A20215B5C03F00431F3B /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		22E7664015AE4D0B00A4D554 /* ReliefClientTimeScapeDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReliefClientTimeScapeDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		22E7666315AE5AED00A4D554 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		30F2B5451415565D00597A7B /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cameras.c; sourceTree = "<group>"; };
 		30F2B5461415565D00597A7B /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core.c; sourceTree = "<group>"; };
 		30F2B5471415565D00597A7B /* freenect_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freenect_internal.h; sourceTree = "<group>"; };
@@ -972,7 +971,6 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				22E7666315AE5AED00A4D554 /* README.txt */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				2250A03B15AE40EF00BCC796 /* src */,
